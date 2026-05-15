@@ -1,0 +1,12 @@
+{
+    "name": "Ivan",
+    "age": 25,
+    "is_student": true,
+    "courses": ["ICT", ".NET Core","Java Script"],
+    "address": {
+        "city": "Moscow",
+        "country": "Russia",
+        "postcode": 109348
+
+    }
+}

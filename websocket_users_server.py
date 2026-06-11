@@ -5,7 +5,6 @@ import asyncio
 async def echo(websocket: websockets.ServerConnection):
     async for message in websocket:
         print(f"Получено сообщение от пользователя: {message}")
-
         for _ in range(5):
             response = f"{_ + 1} Сообщение пользователя: {message}"
             await websocket.send(response)

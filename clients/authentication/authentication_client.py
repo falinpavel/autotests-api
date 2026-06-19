@@ -1,10 +1,7 @@
 from typing import TypedDict
-
-from poetry.console.commands import self
+from httpx import Response
 
 from clients.api_client import APIClient
-
-from httpx import Response
 
 
 class LoginRequestDict(TypedDict):

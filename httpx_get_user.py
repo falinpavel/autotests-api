@@ -3,7 +3,7 @@ import httpx
 from tools.fakers import get_random_email
 
 
-# Создаем пользователя
+# 1. Создаем пользователя
 payload_create_user = {
     "email": get_random_email(),
     "password": "2556535",
@@ -16,7 +16,7 @@ response_create_user = httpx.post(url="http://localhost:8000/api/v1/users", json
 create_user_data = response_create_user.json()
 print(f"Create user (POST /users) data: {create_user_data}")
 
-# Логинимся под ранее зарегистрированным пользователем
+# 2. Логинимся под ранее зарегистрированным пользователем
 payload_login_user = {
     "email": payload_create_user["email"],
     "password": payload_create_user["password"],
@@ -25,7 +25,7 @@ response_login_user = httpx.post(url="http://localhost:8000/api/v1/authenticatio
 authentication_user_data = response_login_user.json()
 print(f"Authentication user (POST /authentication/login) data: {authentication_user_data}")
 
-# Получаем данные о своем пользователе
+# 3. Получаем данные о своем пользователе
 with httpx.Client(headers={"Authorization": f"Bearer {response_login_user.json()["token"]["accessToken"]}"}) as client:
     response_get_user_me = client.get(url="http://localhost:8000/api/v1/users/me")
     get_user_me_data = response_get_user_me.json()

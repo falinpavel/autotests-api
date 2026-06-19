@@ -3,7 +3,7 @@ import httpx
 # 1. Тело запроса POST /authentication/login, в email и password передаем данные своего пользователя
 login_payload = {
     "email": "123@yandex.ru",
-    "password": "2556535",
+    "password": "2556535"
 }
 # 2. Выполняем запрос, передаем свой payload в json
 login_response = httpx.post(url="http://localhost:8000/api/v1/authentication/login", json=login_payload)

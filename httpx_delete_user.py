@@ -19,7 +19,7 @@ print(f"Create user (POST /users) data: {create_user_data}")
 # 2. Логинимся под ранее зарегистрированным пользователем
 payload_login_user = {
     "email": payload_create_user["email"],
-    "password": payload_create_user["password"],
+    "password": payload_create_user["password"]
 }
 response_login_user = httpx.post(url="http://localhost:8000/api/v1/authentication/login", json=payload_login_user)
 login_user_data = response_login_user.json()

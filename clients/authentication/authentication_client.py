@@ -19,7 +19,7 @@ class RefreshRequestDict(TypedDict):
     refreshToken: str
 
 
-class AuthenticationAPIClient(APIClient):
+class AuthenticationClient(APIClient):
     """
     Клиент для работы с /api/v1/authentication
     """

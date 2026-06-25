@@ -15,13 +15,11 @@ class User(TypedDict):
     firstName: str
     middleName: str
 
-
 class CreateUserResponseDict(TypedDict):
     """
     Описание структуры ответа создания пользователя.
     """
     user: User
-
 
 class CreateUserRequestDict(TypedDict):
     """

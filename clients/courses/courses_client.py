@@ -2,7 +2,9 @@ from typing import TypedDict
 from httpx import Response
 
 from clients.api_client import APIClient
+from clients.files.files_client import FileDict
 from clients.private_http_builder import AuthenticationUserDict, get_private_http_client
+from clients.users.private_users_client import UserDict
 
 
 class GetCoursesQueryDict(TypedDict):
@@ -10,7 +12,6 @@ class GetCoursesQueryDict(TypedDict):
     Описание структуры запроса на получение списка курсов текущего пользователя.
     """
     userId: str
-
 
 class CreateCourseRequestDict(TypedDict):
     """
@@ -24,7 +25,6 @@ class CreateCourseRequestDict(TypedDict):
     previewFileId: str
     createdByUserId: str
 
-
 class UpdateCourseRequestDict(TypedDict):
     """
     Описание структуры запроса на обновление курса.
@@ -34,6 +34,25 @@ class UpdateCourseRequestDict(TypedDict):
     minScore: int | None
     description: str | None
     estimatedTime: str | None
+
+class CourseDict(TypedDict):
+    """
+    Описание структуры курса.
+    """
+    id: str
+    title: str
+    maxScore: int
+    minScore: int
+    description: str
+    previewFile: FileDict
+    estimatedTime: str
+    createdByUser: UserDict
+
+class CreateCourseResponseDict(TypedDict):
+    """
+    Описание структуры ответа создания курса.
+    """
+    course: CourseDict
 
 
 class CoursesClient(APIClient):
@@ -72,7 +91,7 @@ class CoursesClient(APIClient):
         """
         return self.post(
             url="/api/v1/courses",
-            data=request
+            json=request
         )
 
     def update_course_api(self, course_id: str, request: UpdateCourseRequestDict) -> Response:
@@ -96,6 +115,10 @@ class CoursesClient(APIClient):
         :return: Ответ от сервера в виде объекта httpx.Response
         """
         return self.delete(url=f"/api/v1/courses/{course_id}")
+
+    def create_course(self, request: CreateCourseRequestDict) -> CreateCourseResponseDict:
+        response = self.create_course_api(request=request)
+        return response.json()
 
 
 # Добавляем builder для CoursesClient

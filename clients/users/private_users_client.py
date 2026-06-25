@@ -14,17 +14,15 @@ class UpdateUserRequestDict(TypedDict):
     firstName: str | None
     middleName: str | None
 
-
-class User(TypedDict):
+class UserDict(TypedDict):
     id: str
     email: str
     lastName: str
     firstName: str
     middleName: str
 
-
 class GetUserResponseDict(TypedDict):
-    user: User
+    user: UserDict
 
 
 class PrivateUsersClient(APIClient):

@@ -12,19 +12,16 @@ class LoginRequestDict(TypedDict):
     email: str
     password: str
 
-
 class RefreshRequestDict(TypedDict):
     """
     Описание структуры запроса для обновления токена.
     """
     refreshToken: str
 
-
 class Token(TypedDict):
     tokenType: str
     accessToken: str
     refreshToken: str
-
 
 class LoginResponseDict(TypedDict):
     token: Token

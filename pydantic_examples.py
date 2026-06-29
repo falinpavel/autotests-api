@@ -54,5 +54,5 @@ structure_with_address = StructureWithAddress(
     )
 )
 print(structure_with_address)
-print(structure_with_address.model_dump())
-print(structure_with_address.model_dump_json())
+print(structure_with_address.model_dump(by_alias=True))
+print(structure_with_address.model_dump_json(by_alias=True))

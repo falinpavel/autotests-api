@@ -13,6 +13,14 @@ class UserFullData(User):
 class SpecificUserData(BaseModel):
     specific_data: str = Field(alias="specificData")
 
+class Address(BaseModel):
+    street: str
+    city: str
+    state: str
+
+class StructureWithAddress(UserFullData):
+    address: Address
+
 response_specific = {
     "specificData": "specific-value"
 }
@@ -31,3 +39,20 @@ user = UserFullData(
 print(user)
 print(user.model_dump())
 print(user.model_dump_json())
+
+structure_with_address = StructureWithAddress(
+    id=123,
+    name="name-user",
+    email="email-full-data",
+    phone_number="phone_number-full-data",
+    course_id=123,
+    is_active=False,
+    address=Address(
+        street="street-full-data",
+        city="city-full-data",
+        state="state-full-data"
+    )
+)
+print(structure_with_address)
+print(structure_with_address.model_dump())
+print(structure_with_address.model_dump_json())

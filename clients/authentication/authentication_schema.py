@@ -15,9 +15,15 @@ class RefreshRequestSchema(BaseModel):
     refresh_token: str = Field(alias="refreshToken")
 
 class TokenSchema(BaseModel):
+    """
+    Описание структуры обьекта токена.
+    """
     token_type: str = Field(alias="tokenType")
     access_token: str = Field(alias="accessToken")
     refresh_token: str = Field(alias="refreshToken")
 
 class LoginResponseSchema(BaseModel):
+    """
+    Описание структуры ответа на запрос.
+    """
     token: TokenSchema

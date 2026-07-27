@@ -13,6 +13,18 @@ class UserSchema(BaseModel):
     first_name: str = Field(alias="firstName")
     middle_name: str = Field(alias="middleName")
 
+class CreateUserRequestSchema(BaseModel):
+    """
+    Описание структуры запроса на создание нового пользователя.
+    """
+    model_config = ConfigDict(populate_by_name=True)
+
+    email: str
+    password: str
+    last_name: str = Field(alias="lastName")
+    first_name: str = Field(alias="firstName")
+    middle_name: str = Field(alias="middleName")
+
 class UpdateUserRequestSchema(BaseModel):
     """
     Описание структуры запроса на обновление пользователя.
@@ -35,15 +47,3 @@ class CreateUserResponseSchema(BaseModel):
     Описание структуры ответа создания пользователя.
     """
     user: UserSchema
-
-class CreateUserRequestSchema(BaseModel):
-    """
-    Описание структуры запроса на создание нового пользователя.
-    """
-    model_config = ConfigDict(populate_by_name=True)
-
-    email: str
-    password: str
-    last_name: str = Field(alias="lastName")
-    first_name: str = Field(alias="firstName")
-    middle_name: str = Field(alias="middleName")

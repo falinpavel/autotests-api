@@ -1,7 +1,7 @@
 from pydantic import BaseModel, Field, EmailStr, StringConstraints
 from typing import Annotated
 
-from tools.fakers import get_random_email
+from tools.fakers import fake
 
 
 class UserSchema(BaseModel):

@@ -14,13 +14,14 @@ class Fake:
         self.faker = faker
         self.faker.add_provider(RuProvider)
 
-    def email(self) -> str:
+    def email(self, domain: str | None = None) -> str:
         """
-        Генерирует случайный email с доменом @gmail.com.
+        Генерирует случайный email.
 
+        :param domain: Домен (опционально).
         :return: Случайный email.
         """
-        return self.faker.email(domain="gmail.com")
+        return self.faker.email(domain=domain)
 
     def first_name(self) -> str:
         """

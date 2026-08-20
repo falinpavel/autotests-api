@@ -8,12 +8,20 @@ from fixtures.users import UserFixture
 from tools.assertions.schema import validate_json_schema
 from tools.assertions.base import assert_status_code
 from tools.assertions.users import assert_create_user_response, assert_get_user_response
+from tools.fakers import fake
 
 
 @pytest.mark.users
 @pytest.mark.regression
-def test_create_user(public_users_client: PublicUsersClient):
-    request = CreateUserRequestSchema()
+@pytest.mark.parametrize(
+    'domain', [
+        'example.com',
+        'gmail.com',
+        'mail.ru'
+    ]
+)
+def test_create_user(public_users_client: PublicUsersClient, domain: str):
+    request = CreateUserRequestSchema(email=fake.email(domain=domain))
     response = public_users_client.create_user_api(request)
     response_data = CreateUserResponseSchema.model_validate_json(json_data=response.text)
 
@@ -30,42 +38,3 @@ def test_get_user_me(func_user: UserFixture, private_users_client: PrivateUsersC
     assert_status_code(actual_status_code=response.status_code, expected_status_code=HTTPStatus.OK)
     assert_get_user_response(get_user_response=response_data, create_user_response=func_user.response)
     validate_json_schema(instance=response.json(), schema=response_data.model_json_schema())
-
-# ^^^
-# def test_get_user_me_without_fixtures():
-#     # ============================================
-#     # ШАГ 1: То, что делает фикстура func_user
-#     # ============================================
-#     public_users_client = get_public_users_client()
-#     request = CreateUserRequestSchema()
-#     create_response = public_users_client.create_user(request=request)
-#     func_user = UserFixture(request=request, response=create_response)
-#
-#     # ============================================
-#     # ШАГ 2: То, что делает фикстура private_users_client
-#     # (использует func_user из шага 1)
-#     # ============================================
-#     private_users_client = get_private_users_client(
-#         user=func_user.authentication_user
-#     )
-#
-#     # ============================================
-#     # ШАГ 3: Сам тест (использует созданные объекты)
-#     # ============================================
-#     response = private_users_client.get_user_me_api()
-#     response_data = GetUserResponseSchema.model_validate_json(
-#         json_data=response.text
-#     )
-#
-#     assert_status_code(
-#         actual_status_code=response.status_code,
-#         expected_status_code=HTTPStatus.OK
-#     )
-#     assert_get_user_response(
-#         get_user_response=response_data,
-#         create_user_response=func_user.response
-#     )
-#     validate_json_schema(
-#         instance=response.json(),
-#         schema=response_data.model_json_schema()
-#     )

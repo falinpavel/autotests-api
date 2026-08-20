@@ -14,14 +14,11 @@ class AuthenticationUserSchema(BaseModel, frozen=True):
 @lru_cache(maxsize=None)
 def get_private_http_client(user: AuthenticationUserSchema) -> Client:
     authentication_client = get_authentication_client()
-
     login_request = LoginRequestSchema(
         email=user.email,
         password=user.password
     )
-
     login_response = authentication_client.login(request=login_request)
-
     return Client(
         base_url="http://localhost:8000",
         timeout=100,

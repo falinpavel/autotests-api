@@ -1,7 +1,6 @@
 import pytest
 from pydantic import BaseModel, EmailStr
 
-from clients.authentication.authentication_client import AuthenticationClient, get_authentication_client
 from clients.private_http_builder import AuthenticationUserSchema
 from clients.users.private_users_client import PrivateUsersClient, get_private_users_client
 from clients.users.public_users_client import PublicUsersClient, get_public_users_client
@@ -48,7 +47,7 @@ def public_users_client() -> PublicUsersClient:
     return get_public_users_client()
 
 @pytest.fixture(scope="function")
-def private_users_client(func_user) -> PrivateUsersClient:
+def private_users_client(func_user: UserFixture) -> PrivateUsersClient:
     return get_private_users_client(user=func_user.authentication_user)
 
 @pytest.fixture(scope="function")

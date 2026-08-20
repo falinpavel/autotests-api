@@ -10,19 +10,6 @@ class FilesFixture(BaseModel):
     request: CreateFileRequestSchema
     response: CreateFileResponseSchema
 
-    @property
-    def filename(self) -> str:
-        return self.request.filename
-
-    @property
-    def directory(self) -> str:
-        return self.request.directory
-
-    @property
-    def id(self) -> str:
-        return self.response.file.id
-
-
 @pytest.fixture(scope="function")
 def files_client(func_user: UserFixture) -> FilesClient:
     return get_files_client(user=func_user.authentication_user)

@@ -20,22 +20,6 @@ class UserFixture(BaseModel):
         return self.request.password
 
     @property
-    def first_name(self) -> str:
-        return self.request.first_name
-
-    @property
-    def last_name(self) -> str:
-        return self.request.last_name
-
-    @property
-    def middle_name(self) -> str:
-        return self.request.middle_name
-
-    @property
-    def id(self) -> str:
-        return self.response.user.id
-
-    @property
     def authentication_user(self) -> AuthenticationUserSchema:
         return AuthenticationUserSchema(
             email=self.email,

@@ -7,6 +7,20 @@ from clients.users.users_schema import (
 from tools.assertions.base import assert_equal
 
 
+def assert_user(actual: UserSchema, expected: UserSchema) -> None:
+    """
+    Проверяет, что два объекта польтзователя (UserSchema) содержат одинаковые данные.
+
+    :param actual: Фактические данные пользователя.
+    :param expected: Ожидаемые данные пользователя.
+    :raises AssertionError: Если хотя бы одно поле не совпадает.
+    """
+    assert_equal(actual=actual.id, expected=expected.id, name="id")
+    assert_equal(actual=actual.email, expected=expected.email, name="email")
+    assert_equal(actual=actual.first_name, expected=expected.first_name, name="first_name")
+    assert_equal(actual=actual.last_name, expected=expected.last_name, name="last_name")
+    assert_equal(actual=actual.email, expected=expected.email, name="email")
+
 def assert_create_user_response(
         request: CreateUserRequestSchema,
         response: CreateUserResponseSchema
@@ -22,20 +36,6 @@ def assert_create_user_response(
     assert_equal(actual=response.user.first_name, expected=request.first_name, name="first_name")
     assert_equal(actual=response.user.middle_name, expected=request.middle_name, name="middle_name")
     assert_equal(actual=response.user.last_name, expected=request.last_name, name="last_name")
-
-def assert_user(actual: UserSchema, expected: UserSchema) -> None:
-    """
-    Проверяет, что два объекта польтзователя (UserSchema) содержат одинаковые данные.
-
-    :param actual: Фактические данные пользователя.
-    :param expected: Ожидаемые данные пользователя.
-    :raises AssertionError: Если хотя бы одно поле не совпадает.
-    """
-    assert_equal(actual=actual.id, expected=expected.id, name="id")
-    assert_equal(actual=actual.email, expected=expected.email, name="email")
-    assert_equal(actual=actual.first_name, expected=expected.first_name, name="first_name")
-    assert_equal(actual=actual.last_name, expected=expected.last_name, name="last_name")
-    assert_equal(actual=actual.email, expected=expected.email, name="email")
 
 def assert_get_user_response(
     get_user_response: GetUserResponseSchema,

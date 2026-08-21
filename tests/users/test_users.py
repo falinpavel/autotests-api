@@ -23,7 +23,7 @@ class TestUsers:
     )
     def test_create_user(self, public_users_client: PublicUsersClient, domain: str):
         request = CreateUserRequestSchema(email=fake.email(domain=domain))
-        response = public_users_client.create_user_api(request)
+        response = public_users_client.create_user_api(request=request)
         response_data = CreateUserResponseSchema.model_validate_json(json_data=response.text)
 
         assert_status_code(actual_status_code=response.status_code, expected_status_code=HTTPStatus.OK)

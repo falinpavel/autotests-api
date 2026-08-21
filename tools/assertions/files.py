@@ -93,14 +93,32 @@ def assert_create_file_with_empty_directory_response(actual: ValidationErrorResp
     )
     assert_validation_error_response(actual=actual, expected=expected)
 
-def assert_file_not_found_response(actual: InternalErrorResponseSchema):
+def assert_file_not_found_response(actual: InternalErrorResponseSchema) -> None:
     """
     Функция для проверки ошибки, если файл не найден на сервере.
 
     :param actual: Фактический ответ.
     :raises AssertionError: Если фактический ответ не соответствует ошибке "File not found"
     """
-    # Ожидаемое сообщение об ошибке, если файл не найден
     expected = InternalErrorResponseSchema(details="File not found")
-    # Используем ранее созданную функцию для проверки внутренней ошибки
     assert_internal_error_response(actual=actual, expected=expected)
+
+def assert_get_file_with_incorrect_file_id_response(actual: ValidationErrorResponseSchema) -> None:
+    """
+    Проверяет, что ответ на получение файла с невалидным значением file_id директории соответствует ожидаемой валидационной ошибке.
+
+    :param actual: Ответ от API с ошибкой валидации, который необходимо проверить.
+    :raises AssertionError: Если фактический ответ не соответствует ожидаемому.
+    """
+    expected = ValidationErrorResponseSchema(
+        details=[
+            ValidationErrorSchema(
+                type="uuid_parsing",
+                input="incorrect-file-id",
+                context={"error": "invalid character: found `i` at 1"},
+                message="Input should be a valid UUID, invalid character: found `i` at 1",
+                location=["path", "file_id"]
+            )
+        ]
+    )
+    assert_validation_error_response(actual=actual, expected=expected)
